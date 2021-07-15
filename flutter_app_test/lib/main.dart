@@ -17,18 +17,20 @@ class LandingScreen extends StatefulWidget {
 class _LandingScreenState extends State<LandingScreen> {
   late File imageFile;
 
-  _openGallery() async {
+  _openGallery(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.gallery);
     this.setState(() {
       imageFile = picture as File;
     });
+    Navigator.of(context).pop();
   }
 
-  _openCamera() async {
+  _openCamera(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.camera);
     this.setState(() {
       imageFile = picture as File;
     });
+    Navigator.of(context).pop();
   }
 
   Future<void> _showChoiceDialog(BuildContext context) {
@@ -43,14 +45,14 @@ class _LandingScreenState extends State<LandingScreen> {
                   GestureDetector(
                     child: Text("Gallery"),
                     onTap: () {
-                      _openGallery();
+                      _openGallery(context);
                     },
                   ),
                   Padding(padding: EdgeInsets.all(8.0)),
                   GestureDetector(
                     child: Text("Camera"),
                     onTap: () {
-                      _openCamera();
+                      _openCamera(context);
                     },
                   )
                 ],
@@ -58,6 +60,15 @@ class _LandingScreenState extends State<LandingScreen> {
             ),
           );
         });
+  }
+
+  Widget _decideImageView() {
+    if (imageFile == Null) {
+      return Text("No Image Selected");
+    } else {
+      Image.file(imageFile, width: 400, height: 400);
+    }
+    return Text("");
   }
 
   @override
@@ -71,7 +82,7 @@ class _LandingScreenState extends State<LandingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            Text("No image Selected"),
+            _decideImageView(),
             RaisedButton(
               onPressed: () {
                 _showChoiceDialog(context);
