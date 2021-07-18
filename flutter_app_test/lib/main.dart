@@ -15,7 +15,7 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  late File imageFile;
+  File  imageFile = File('');
 
   _openGallery(BuildContext context) async {
     var picture = await ImagePicker().getImage(source: ImageSource.gallery);
@@ -63,7 +63,7 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Widget _decideImageView() {
-    if (imageFile == Null) {
+    if (imageFile == null) {
       return Text("No Image Selected");
     } else {
       Image.file(imageFile, width: 400, height: 400);
