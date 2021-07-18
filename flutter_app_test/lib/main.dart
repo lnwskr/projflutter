@@ -63,7 +63,7 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Widget _decideImageView() {
-    if (imageFile == null) {
+    if (imageFile == Null) {
       return Text("No Image Selected");
     } else {
       Image.file(imageFile, width: 400, height: 400);
